@@ -19,7 +19,9 @@ export default {
   subscriptions:{
    setup({history}){
     return history.listen(({pathname})=>{
-      alert(pathname)
+       if(pathname === '/app'){
+         alert("adpp")
+       }
      })
    }
   }

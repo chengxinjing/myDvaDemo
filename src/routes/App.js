@@ -1,7 +1,9 @@
+import {Link} from 'dva/router';
 const  App =(props)=>{
   return(
     <div>
-      <p>asdad</p>
+      <Link to ='/test/me'>asdad</Link>
+      {props.children}
     </div>
   )
 }

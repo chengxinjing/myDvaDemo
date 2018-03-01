@@ -1,11 +1,20 @@
 import React from 'react';
-import {Route,routerRedux} from 'dva/router';
-import App from'./routes/App'
+import {Route,routerRedux,Switch} from 'dva/router';
+import App from'./routes/App';
+import Test from'./routes/Test';
+import Login from './routes/login/Login'
 const {ConnectedRouter}  = routerRedux
 function RouterConfig({ history,app }) {
   return (
     <ConnectedRouter history={history}>
-        <Route path='/app/a/a' exact component={App}/>
+      <Switch>
+        <Route path='/' exact component={Login}/>
+
+          <App>
+            <Route path='/test/me' exact component={Test}/>
+          </App>
+
+      </Switch>
     </ConnectedRouter>
   );
 }
