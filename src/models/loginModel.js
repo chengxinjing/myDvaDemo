@@ -10,6 +10,9 @@ export default {
      *login({payload},{put,call}){
       const {data} = yield call(LoginService.login,'/login',payload);
       if(data.success){
+        yield put({
+          type:'app/query'
+        })
         yield put(routerRedux.push('/app'))
       }else{
         alert(data.message)
@@ -17,11 +20,14 @@ export default {
      }
   },
   subscriptions:{
-   setup({history}){
+   setup({history,dispatch}){
     return history.listen(({pathname})=>{
-       if(pathname === '/app'){
-         alert("adpp")
-       }
+        if(pathname !== '/'){
+          //查询menus
+          dispatch({
+            type:'app/query'
+          })
+        }
      })
    }
   }
