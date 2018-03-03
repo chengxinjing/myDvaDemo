@@ -3,7 +3,8 @@ import {Link} from 'dva/router'
 const {Sider} =Layout
 const {SubMenu} = Menu;
 const Menus = (props)=>{
-  const {menus} = props;
+  const {menus,currentMenu} = props;
+
   const createMenus = menus.map(menu=>{
     return (
 
@@ -20,7 +21,8 @@ const Menus = (props)=>{
         <Menu
           mode="inline"
           style={{ height: '100%'}}
-
+          defaultOpenKeys={[`${currentMenu[0].pid}`]}
+          selectedKeys={[`${currentMenu[0].id}`]}
         >
         {createMenus}
         </Menu>

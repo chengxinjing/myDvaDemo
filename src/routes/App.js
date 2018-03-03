@@ -4,35 +4,33 @@ import Headers from '../components/header/Headers'
 import Menus from '../components/menu/Menus'
 import {Layout} from 'antd'
 import {withRouter} from 'dva/router'
+import pathToRegexp from 'path-to-regexp';
 const {Footer,Content} = Layout
 const  App =(props)=>{
   const {location,menus,children} = props;
   let pathname = location.pathname;
   pathname =  pathname.startsWith('/')?pathname:`/${pathname}`;
-  let currentMenu ;
- const getCurrentMenu = (menus,pathname)=>{
-   menus
-
- }
- //获取父菜单
-  const getParentMenu=(menus,id,pid)=>{
-   return menus.filter(menu=>menu.id === id)
+  let currentMenu=[];
+ const parentMenu = menus.filter(menu=>pathname.indexOf(menu.purl)!=-1);
+  if(parentMenu.length > 0){
+    currentMenu =  parentMenu[0].children.filter(menu=>menu.url === pathname)
   }
-  const getSubMenu =(menu,pid)=>{
-   return menu.children.filter(sub=>sub.pid === pid)
+  if(currentMenu.length === 0){
+    currentMenu.push({id:'',pid:''})
   }
-
-  currentMenu = getCurrentMenu(menus,pathname);
+  const menuProps={
+    menus,
+    currentMenu
+  }
   return(
     <div>
      <Layout>
        <Headers/>
        <Content style={{ padding: '0 50px' }}>
          <Layout style={{ padding: '24px 0', background: '#fff' }}>
-           <Menus menus={menus} />
+           {menus.length===0?null:<Menus {...menuProps} />}
            <Content style={{ padding: '0 24px', minHeight: 755 }}>
              {pathname==='/app'?<div>欢迎使用万众普惠贷后系统</div>:children}
-             {currentMenu?currentMenu.url:''}
            </Content>
          </Layout>
        </Content>

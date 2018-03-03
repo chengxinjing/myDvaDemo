@@ -26,8 +26,6 @@ function RouterConfig({ history,app }) {
 
          )}
        </App>
-
-
       </Switch>
     </ConnectedRouter>
   );

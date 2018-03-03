@@ -12,6 +12,7 @@ let menuDB = [{
   id:'1',
   name:'案件管理',
   icon:'appstore',
+  purl:'/case',
   children:[{
     id:'101',
     pid:'1',
@@ -27,6 +28,7 @@ let menuDB = [{
     id:'2',
     name:'客户',
     icon:'user',
+    purl:'/customer',
     children:[{
       id:'201',
       pid:'2',
@@ -42,6 +44,7 @@ let menuDB = [{
   id:'3',
     name:'权限管理',
     icon:'setting',
+    purl:'/permisson',
     children:[{
     id:'301',
     pid:'3',
