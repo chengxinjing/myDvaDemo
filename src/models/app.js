@@ -17,7 +17,8 @@ export default {
        })
     },
     *loginOut({payload},{put,select,call}){
-      yield  put(routerRedux.push('/'));
+       yield  call(appService.loginOut,'/loginOut')
+       yield  put(routerRedux.push('/'));
     }
   },
   reducers:{

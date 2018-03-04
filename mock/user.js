@@ -57,7 +57,10 @@ module.exports = {
     const user = userDB.filter(user => user.username === username);
     let hashPassword = Base64.encode(sha256().update(password).digest('hex'));
     if (user.length > 0 && user[0].password === hashPassword) {
-      res.cookie('token', JSON.stringify({username:username,password:hashPassword}));
+      res.cookie('token', JSON.stringify({username:username,password:hashPassword}),{
+        maxAge:900000,
+        httpOnly:true,
+      });
       res.json({
         success: true,
         message: '登录成功',
@@ -73,5 +76,8 @@ module.exports = {
     }
   },[`GET /getMenus`](req,res){
     res.status(200).json(menuDB);
+  },[`get /loginOut`](req,res){
+    res.clearCookie('token');
+    res.status(200).end()
   }
 }
