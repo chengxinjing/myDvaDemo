@@ -17,7 +17,9 @@ const Menus = (props)=>{
   })
 
   return(
-      <Sider width={200} style={{ background: '#fff' }}>
+      <Sider breakpoint="xs"
+
+             width={200} style={{ background: '#fff' }}>
         <Menu
           mode="inline"
           style={{ height: '100%'}}

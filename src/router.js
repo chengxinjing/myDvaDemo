@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route,routerRedux,Switch} from 'dva/router';
+import {Route,routerRedux,Switch,Redirect} from 'dva/router';
 import dynamic from 'dva/dynamic'
 import App from'./routes/App';
 import Login  from './routes/login/Login'
@@ -15,7 +15,8 @@ function RouterConfig({ history,app }) {
   return (
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path='/' exact component={Login}/>
+        <Route path='/'  exact render={()=><Redirect to='/login'/>}/>
+        <Route path='/login' exact component={Login}/>
        <App>
          {routes.map(({path,...dynamics},key)=>(
            <Route key ={key} path={path} exact component={dynamic({
@@ -23,7 +24,6 @@ function RouterConfig({ history,app }) {
              ...dynamics
            })}/>
            )
-
          )}
        </App>
       </Switch>

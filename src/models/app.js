@@ -1,8 +1,10 @@
 import * as  appService from '../services/appService';
+import {routerRedux} from 'dva/router';
 export default {
   namespace:'app',
   state:{
-     menus:[]
+     menus:[],
+    username:localStorage.getItem('username')
   },
   effects:{
     *query({payload},{put,call}){
@@ -13,6 +15,9 @@ export default {
            menus:data
          }
        })
+    },
+    *loginOut({payload},{put,select,call}){
+      yield  put(routerRedux.push('/'));
     }
   },
   reducers:{
