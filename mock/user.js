@@ -3,10 +3,12 @@ const qs = require('qs');
 var Base64 = require('js-base64').Base64;
 var sha256 = require('hash.js/lib/hash/sha/256');
 let userDB = [{
+  id:'0',
   username: 'admin',
   password: 'OGQ5NjllZWY2ZWNhZDNjMjlhM2E2MjkyODBlNjg2Y2YwYzNmNWQ1YTg2YWZmM2NhMTIwMjBjOTIzYWRjNmM5Mg=='
 },
   {
+    id:'1',
     username: 'super',
     password: 'OGQ5NjllZWY2ZWNhZDNjMjlhM2E2MjkyODBlNjg2Y2YwYzNmNWQ1YTg2YWZmM2NhMTIwMjBjOTIzYWRjNmM5Mg=='
   }]
@@ -57,7 +59,9 @@ module.exports = {
     const user = userDB.filter(user => user.username === username);
     let hashPassword = Base64.encode(sha256().update(password).digest('hex'));
     if (user.length > 0 && user[0].password === hashPassword) {
-      res.cookie('token', JSON.stringify({username:username,password:hashPassword}),{
+      const  now = new Date();
+      now.setDate(now.getDate()+1);
+      res.cookie('token', JSON.stringify({username:username,deadLine:now.getTime()}),{
         maxAge:900000,
         httpOnly:true,
       });
@@ -79,5 +83,25 @@ module.exports = {
   },[`get /loginOut`](req,res){
     res.clearCookie('token');
     res.status(200).end()
+  },[`get /isLogin`](req,res){
+
+    const cookie = req.headers.cookie || ''
+    const cookies = qs.parse(cookie.replace(/\s/g, ''), { delimiter: ';' })
+    const response ={}
+    let  token = cookies.token
+    if(!token){
+      res.status(200).send({message:'Not Login '})
+      return
+    }
+    token  =JSON.parse(token)
+    if(token){
+      response.success =token.deadLine> new Date().getTime();
+    }
+    if(response.success){
+      //表示token没有过期 保持登录状态
+
+    }
+    res.json(response);
+    res.status(200).end();
   }
 }

@@ -5,3 +5,6 @@ export function query(url) {
 export  function loginOut(url) {
  return  request(url);
 }
+export  function  isLogin(url) {
+  return request(url)
+}

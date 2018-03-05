@@ -26,7 +26,7 @@ export default {
   subscriptions:{
    setup({history,dispatch}){
     return history.listen(({pathname})=>{
-        if(pathname !== '/'){
+        if(pathname !=='/login'&& pathname !=='/' ){
           //查询menus
           dispatch({
             type:'app/query'
